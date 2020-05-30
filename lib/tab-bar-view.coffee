@@ -85,9 +85,9 @@ class TabBarView
     @subscriptions.add @pane.onDidChangeActiveItem (item) =>
       @updateActiveTab()
 
-    @subscriptions.add atom.config.observe 'tabs.tabScrolling', (value) => @updateTabScrolling(value)
-    @subscriptions.add atom.config.observe 'tabs.tabScrollingThreshold', (value) => @updateTabScrollingThreshold(value)
-    @subscriptions.add atom.config.observe 'tabs.alwaysShowTabBar', => @updateTabBarVisibility()
+    @subscriptions.add atom.config.observe 'atom-tabs.tabScrolling', (value) => @updateTabScrolling(value)
+    @subscriptions.add atom.config.observe 'atom-tabs.tabScrollingThreshold', (value) => @updateTabScrollingThreshold(value)
+    @subscriptions.add atom.config.observe 'atom-tabs.alwaysShowTabBar', => @updateTabBarVisibility()
 
     @updateActiveTab()
 
@@ -121,7 +121,7 @@ class TabBarView
     tabView.terminatePendingState() if @isItemMovingBetweenPanes
     @tabsByElement.set(tabView.element, tabView)
     @insertTabAtIndex(tabView, index)
-    if atom.config.get('tabs.addNewTabsAtEnd')
+    if atom.config.get('atom-tabs.addNewTabsAtEnd')
       @pane.moveItem(item, @pane.getItems().length - 1) unless @isItemMovingBetweenPanes
 
   moveItemTabToIndex: (item, index) ->
@@ -156,7 +156,7 @@ class TabBarView
 
   updateTabBarVisibility: ->
     # Show tab bar if the setting is true or there is more than one tab
-    if atom.config.get('tabs.alwaysShowTabBar') or @pane.getItems().length > 1
+    if atom.config.get('atom-tabs.alwaysShowTabBar') or @pane.getItems().length > 1
       @element.classList.remove('hidden')
     else
       @element.classList.add('hidden')
@@ -396,7 +396,7 @@ class TabBarView
   onPaneDragEnter: (event) ->
     return unless @isAtomTabEvent(event)
     return unless @itemIsAllowed(event, @location)
-    return if @pane.getItems().length > 1 or atom.config.get('tabs.alwaysShowTabBar')
+    return if @pane.getItems().length > 1 or atom.config.get('atom-tabs.alwaysShowTabBar')
     if @paneElement.contains(event.relatedTarget)
       @element.classList.remove('hidden')
 
@@ -404,7 +404,7 @@ class TabBarView
   onPaneDragLeave: (event) ->
     return unless @isAtomTabEvent(event)
     return unless @itemIsAllowed(event, @location)
-    return if @pane.getItems().length > 1 or atom.config.get('tabs.alwaysShowTabBar')
+    return if @pane.getItems().length > 1 or atom.config.get('atom-tabs.alwaysShowTabBar')
     unless @paneElement.contains(event.relatedTarget)
       @element.classList.add('hidden')
 

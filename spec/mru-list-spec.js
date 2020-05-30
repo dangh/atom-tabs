@@ -6,8 +6,8 @@ const temp = require('temp').track()
 
 describe('MRU List', () => {
   let workspaceElement = null
-  const enableMruConfigKey = 'tabs.enableMruTabSwitching'
-  const displayMruTabListConfigKey = 'tabs.displayMruTabList'
+  const enableMruConfigKey = 'atom-tabs.enableMruTabSwitching'
+  const displayMruTabListConfigKey = 'atom-tabs.displayMruTabList'
 
   beforeEach(async () => {
     workspaceElement = atom.workspace.getElement()

@@ -123,16 +123,16 @@ class TabView
         @terminatePendingState()
         if event.path isnt @path
           @path = event.path
-          @setupVcsStatus() if atom.config.get 'tabs.enableVcsColoring'
+          @setupVcsStatus() if atom.config.get 'atom-tabs.enableVcsColoring'
 
       if Disposable.isDisposable(onDidSaveDisposable)
         @subscriptions.add(onDidSaveDisposable)
       else
         console.warn "::onDidSave does not return a valid Disposable!", @item
-    @subscriptions.add atom.config.observe 'tabs.showIcons', =>
+    @subscriptions.add atom.config.observe 'atom-tabs.showIcons', =>
       @updateIconVisibility()
 
-    @subscriptions.add atom.config.observe 'tabs.enableVcsColoring', (isEnabled) =>
+    @subscriptions.add atom.config.observe 'atom-tabs.enableVcsColoring', (isEnabled) =>
       if isEnabled and @path? then @setupVcsStatus() else @unsetVcsStatus()
 
   setupTooltip: ->
@@ -157,7 +157,7 @@ class TabView
     @destroyTooltip()
 
     if tooltipTitle = @path
-      if atom.config.get 'tabs.tooltipDisplayRelativePath'
+      if atom.config.get 'atom-tabs.tooltipDisplayRelativePath'
         [projectPath, relativePath] = atom.project.relativizePath(@path)
         tooltipTitle = relativePath if projectPath
       @tooltip = atom.tooltips.add @element,
@@ -233,7 +233,7 @@ class TabView
     @element.classList.remove('pending-tab')
 
   updateIconVisibility: ->
-    if atom.config.get 'tabs.showIcons'
+    if atom.config.get 'atom-tabs.showIcons'
       @itemTitle.classList.remove('hide-icon')
     else
       @itemTitle.classList.add('hide-icon')
@@ -290,7 +290,7 @@ class TabView
 
   updateVcsColoring: ->
     @itemTitle.classList.remove('status-ignored', 'status-modified',  'status-added')
-    if @status and atom.config.get 'tabs.enableVcsColoring'
+    if @status and atom.config.get 'atom-tabs.enableVcsColoring'
       @itemTitle.classList.add("status-#{@status}")
 
   unsetVcsStatus: ->
