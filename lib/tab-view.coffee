@@ -156,9 +156,12 @@ class TabView
 
     @destroyTooltip()
 
-    if @path
+    if tooltipTitle = @path
+      if atom.config.get 'tabs.tooltipDisplayRelativePath'
+        [projectPath, relativePath] = atom.project.relativizePath(@path)
+        tooltipTitle = relativePath if projectPath
       @tooltip = atom.tooltips.add @element,
-        title: @path
+        title: tooltipTitle
         html: false
         delay:
           show: 1000
